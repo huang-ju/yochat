@@ -4,6 +4,7 @@ import Link from "next/link";
 import EosApi from "eosjs-api";
 import _ from "lodash";
 import Header from "@/components/header/index";
+import MsgCard from "@/components/msgCard/index";
 
 const options = {
   httpEndpoint: "https://api.web3name.one",
@@ -26,7 +27,7 @@ export default function Home() {
       scope: "name.w3n", // 表的作用域（一般为合约账户名）
       table: "chatidtable", // 表名
       json: true, // 返回结果是否以 JSON 格式
-      limit: 10, // 返回结果的最大行数限制
+      limit: 1, // 返回结果的最大行数限制
       lower_bound: key, // 返回结果的起始行，按照表的主键排序
       upper_bound: key, // 返回结果的结束行，按照表的主键排序
       reverse: true, //从最后一行往前获取
@@ -49,6 +50,7 @@ export default function Home() {
 
     msgRes.rows[0]["author"] = author;
     setMsgList([...msgList, ...msgRes.rows]);
+    console.log("msgList", JSON.stringify(msgList));
   };
 
   useEffect(() => {
@@ -56,25 +58,21 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (msgList.length < 100) {
+    if (msgList.length < 2) {
       getEosNewKey(textid);
     }
   }, [textid]);
 
   return (
-    <main className="min-h-screen">
+    <div className="min-h-screen">
       <Header />
-      {msgList.map((msg, index) => {
-        return (
-          <div key={_.uniqueId("msg")} className="underline-offset-auto">
-            <div>
-              {msg.author}:{msg.title}
-            </div>
-            <div>{msg.chat}</div>
-            <div>{msg.time}</div>
-          </div>
-        );
-      })}
-    </main>
+      <main>
+        <div className="flex flex-col items-center gap-5 py-5">
+          {msgList.map((msg) => {
+            return MsgCard(msg);
+          })}
+        </div>
+      </main>
+    </div>
   );
 }

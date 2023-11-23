@@ -1,0 +1,11 @@
+{
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "emmet.syntaxProfiles": {
+    "tailwindcss": "html"
+  },
+  "emmet.includeLanguages": {
+    "tailwindcss": "html"
+  }
+}
