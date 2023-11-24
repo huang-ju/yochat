@@ -9,3 +9,8 @@
 body {
   background: var(--foreground-rgb);
 }
+
+a {
+  color: -webkit-link;
+  text-decoration: underline;
+}

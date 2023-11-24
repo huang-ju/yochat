@@ -1,2 +1,6 @@
 .card {
+  &_chat {
+    @apply text-gray-700;
+    word-break: break-word;
+  }
 }
